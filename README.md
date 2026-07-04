@@ -68,7 +68,8 @@ python seed_data.py
 Run the app:
 
 ```bash
-FLASK_APP=app:create_app flask run
+# $env:FLASK_APP="app:create_app"; flask run
+FLASK_APP=app:create_app flask run 
 ```
 
 > **macOS note:** If the app starts but requests hang or return connection refused, try `http://127.0.0.1:5000` instead of `http://localhost:5000`. On macOS, `localhost` sometimes resolves to an IPv6 address that Flask isn't listening on.
