@@ -109,3 +109,28 @@ The service is read-only, using SQLAlchemy to query data without modifying the d
 `update_listening_streak()` compares today's date with the user's last_listened_at. If it's the user's first listen, the streak starts at 1. If they already listened today, nothing changes. If they listened yesterday, the streak increases by 1. Otherwise, the streak resets to 1, and last_listened_at is updated.
 
 **Pattern I noticed:** The service keeps streak logic in a separate helper function (`update_listening_streak()`), while `record_listening_event()` handles database operations. It validates users before making changes and separates updating streaks from simply retrieving them with `get_streak()`.
+
+---
+
+## Bug reproduction
+
+**Bug 1:**
+The test fails when the current day is a Sunday. 
+
+The test was ran using the command line: `pytest tests/test_streaks.py -v`
+
+The bug can be reproduced when the second parameter in `datetime()` is a 6.
+
+**Bug 2:**
+The test fails because a song can be returned several times.
+
+The test was ran using the command line: `pytest tests/test_search.py -v`
+
+The bug can be reproduced with a song with multiple tags.
+
+**Bug 3:**
+The test fails because the last song in the playlist is always omitted.
+
+The test was ran using the command line: `pytest tests/test_playlists.py -v`
+
+The bug can be reproduced with a list of any length.
